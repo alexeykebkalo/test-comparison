@@ -8,5 +8,12 @@
     <artifactId>clever-bot</artifactId>
     <version>0.1-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.2.5.RELEASE</version>
+        </dependency>
+    </dependencies>
 
 </project>
