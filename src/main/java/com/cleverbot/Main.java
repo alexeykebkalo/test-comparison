@@ -1,6 +1,5 @@
 package com.cleverbot;
 
-import com.asprise.ocr.Ocr;
 import com.cleverbot.sense.screenvision.ScreenAnalyzer;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class Main {
     public static void main(String [] args) {
-        Ocr.main(args);
 //        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
 //        ScreenAnalyzer screenAnalyzer = context.getBean(ScreenAnalyzer.class);
 //        screenAnalyzer.saveImages();
