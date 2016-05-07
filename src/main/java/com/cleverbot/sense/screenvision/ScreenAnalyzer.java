@@ -2,13 +2,13 @@ package com.cleverbot.sense.screenvision;
 
 import com.cleverbot.memory.Entity;
 import com.cleverbot.sense.SenseAnalyzer;
+import com.cleverbot.sense.screenvision.clasterization.ClusteringService;
+import com.cleverbot.sense.screenvision.model.Image;
+import com.cleverbot.sense.screenvision.util.ImageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,14 +23,20 @@ public class ScreenAnalyzer implements SenseAnalyzer {
     @Autowired
     private ScreenInput screenInput;
 
+    @Autowired
+    private ClusteringService clusteringService;
+
     public List<Entity> getEntities() {
-        BufferedImage image = screenInput.getImage();
+        //BufferedImage bufferedImage = screenInput.getImage();
+
+        BufferedImage bufferedImage = null;
         try {
-            ImageIO.write(image, "bmp", new File("input"));
+            bufferedImage = ImageIO.read(new File("image00003.bmp"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        Image image = ImageConverter.convertFromBufferedImage(bufferedImage);
+        List<Image> clusters = clusteringService.cluster(image);
         return null;
     }
 
