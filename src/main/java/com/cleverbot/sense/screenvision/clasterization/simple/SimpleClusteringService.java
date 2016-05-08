@@ -15,7 +15,7 @@ import java.util.List;
 public class SimpleClusteringService implements ClusteringService {
 
     public List<Image> cluster(Image image) {
-        ClusteredPixel[][] clusteredPixels = new ClusteredPixel[image.getHeight()][image.getWidth()];
+        ClusteredPixel[][] clusteredPixels = new ClusteredPixel[image.getWidth()][image.getHeight()];
         List<Cluster> clusters = new ArrayList<Cluster>();
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
@@ -23,11 +23,11 @@ public class SimpleClusteringService implements ClusteringService {
                 ClusteredPixel clusteredPixel = new ClusteredPixel();
                 Pixel pixel = image.getPixel(x, y);
                 clusteredPixel.setPixel(pixel);
-                clusteredPixels[y][x] = clusteredPixel;
+                clusteredPixels[x][y] = clusteredPixel;
                 if (x > 0 && PixelsComparator.areSimilar(pixel, image.getPixel(x - 1, y))) {
-                    cluster = clusteredPixels[y][x - 1].getCluster();
+                    cluster = clusteredPixels[x-1][y].getCluster();
                 } else if (y > 0 && PixelsComparator.areSimilar(pixel, image.getPixel(x, y - 1))) {
-                    cluster = clusteredPixels[y][x - 1].getCluster();
+                    cluster = clusteredPixels[x][y - 1].getCluster();
                 } else {
                     cluster = new Cluster();
                     clusters.add(cluster);

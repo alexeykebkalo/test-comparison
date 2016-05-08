@@ -5,18 +5,26 @@ package com.cleverbot.sense.screenvision.model;
  */
 public class Image {
 
-    private int x;
-    private int y;
+    private int startX;
+    private int startY;
     private int width;
     private int height;
     private Pixel[][] pixels;
 
-    public int getX() {
-        return x;
+    public Image(int startX, int startY, int width, int height) {
+        this.startX = startX;
+        this.startY = startY;
+        this.width = width;
+        this.height = height;
+        pixels = new Pixel[width][height];
     }
 
-    public int getY() {
-        return y;
+    public int getStartX() {
+        return startX;
+    }
+
+    public int getStartY() {
+        return startY;
     }
 
     public int getWidth() {
@@ -31,31 +39,11 @@ public class Image {
         return pixels;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public void setPixels(Pixel[][] pixels) {
-        this.pixels = pixels;
-    }
-
     public Pixel getPixel(int x, int y) {
-        return pixels[y][x];
+        return pixels[x][y];
     }
 
-    public void setPixel(int x, int y, Pixel pixel) {
-        pixels[y][x] = pixel;
+    public void setPixel(Pixel pixel) {
+        pixels[pixel.getX()][pixel.getY()] = pixel;
     }
 }
