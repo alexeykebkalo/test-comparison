@@ -21,10 +21,10 @@ public class SimpleClusteringService implements ClusteringService {
                 Cluster cluster = null;
                 ClusteredPixel clusteredPixel = new ClusteredPixel(image.getPixel(x, y));
                 clusteredPixels[x][y] = clusteredPixel;
-                if (x > 0 && PixelsComparator.areSimilar(clusteredPixel, image.getPixel(x - 1, y))) {
+                if (x > 0 && PixelsComparator.areSimilar(clusteredPixel.getColor(), clusteredPixels[x - 1][y].getCluster().getColor())) {
                     cluster = clusteredPixels[x-1][y].getCluster();
                 }
-                if (y > 0 && PixelsComparator.areSimilar(clusteredPixel, image.getPixel(x, y - 1))) {
+                if (y > 0 && PixelsComparator.areSimilar(clusteredPixel.getColor(), clusteredPixels[x][y - 1].getCluster().getColor())) {
                     Cluster yCluster = clusteredPixels[x][y - 1].getCluster();
                     if (cluster == null) {
                         cluster = yCluster;

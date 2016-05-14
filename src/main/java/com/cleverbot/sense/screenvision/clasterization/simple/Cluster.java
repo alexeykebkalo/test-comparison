@@ -3,6 +3,7 @@ package com.cleverbot.sense.screenvision.clasterization.simple;
 import com.cleverbot.sense.screenvision.model.Image;
 import com.cleverbot.sense.screenvision.model.Pixel;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,10 @@ public class Cluster {
     private int maxx;
     private int maxy;
     private List<ClusteredPixel> clusteredPixels = new ArrayList<>();
+    private Color averageColor;
+    private int redSum;
+    private int greenSum;
+    private int blueSum;
 
     public void addPixel(ClusteredPixel pixel) {
         if (clusteredPixels.isEmpty()) {
@@ -23,6 +28,10 @@ public class Cluster {
             miny = pixel.getY();
             maxx = pixel.getX();
             maxy = pixel.getY();
+            averageColor = pixel.getColor();
+            redSum = averageColor.getRed();
+            greenSum = averageColor.getGreen();
+            blueSum = averageColor.getBlue();
         } else {
             if (pixel.getX() < minx) {
                 minx = pixel.getX();
@@ -34,6 +43,12 @@ public class Cluster {
             } else if (pixel.getY() > maxy) {
                 maxy = pixel.getY();
             }
+            Color color = pixel.getColor();
+            redSum += color.getRed();
+            greenSum += color.getGreen();
+            blueSum += color.getBlue();
+            int newSize = clusteredPixels.size() + 1;
+            averageColor = new Color(redSum / newSize, greenSum / newSize, blueSum / newSize);
         }
         clusteredPixels.add(pixel);
     }
@@ -53,5 +68,9 @@ public class Cluster {
             image.setPixel(pixel);
         }
         return image;
+    }
+
+    public Color getColor() {
+        return averageColor;
     }
 }
