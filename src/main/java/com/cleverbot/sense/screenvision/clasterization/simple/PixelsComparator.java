@@ -6,7 +6,7 @@ import com.cleverbot.sense.screenvision.model.Pixel;
  * Created by Alexey Kebkalo akebkalo@gmail.com on 07.05.2016.
  */
 public class PixelsComparator {
-    private static final int THRESHOLD = 40;
+    private static final int THRESHOLD = 70;
     private static final int THRESHOLD_X2 = THRESHOLD * THRESHOLD;
 
     public static boolean areSimilar(Pixel pixel1, Pixel pixel2) {

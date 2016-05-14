@@ -5,6 +5,7 @@ import com.cleverbot.sense.SenseAnalyzer;
 import com.cleverbot.sense.screenvision.clasterization.ClusteringService;
 import com.cleverbot.sense.screenvision.model.Image;
 import com.cleverbot.sense.screenvision.util.ImageConverter;
+import com.sun.istack.internal.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +21,8 @@ import java.util.List;
  */
 @Component
 public class ScreenAnalyzer implements SenseAnalyzer {
+
+    private final static Logger LOG = Logger.getLogger(ScreenAnalyzer.class);
 
     @Autowired
     private ScreenInput screenInput;
@@ -36,25 +40,30 @@ public class ScreenAnalyzer implements SenseAnalyzer {
             e.printStackTrace();
         }
         Image image = ImageConverter.convertFromBufferedImage(bufferedImage);
+        LOG.info("Received image. Generating clusters...");
         List<Image> clusters = clusteringService.cluster(image);
-        return null;
-    }
+        LOG.info(String.format("Image has been processed. Received %d clusters", clusters.size()));
 
-    public void saveImages() {
-        for (int i = 0; i < 10; i++) {
-            String fileName = String.format("image%05d.bmp", i);
-            BufferedImage image = screenInput.getImage();
+        int counter = 0;
+        for (Image cluster : clusters) {
+            BufferedImage outputImage = ImageConverter.convertToBufferedImage(cluster);
+            String fileName = String.format("clusters/cluster%04d.bmp", ++counter);
             try {
-                ImageIO.write(image, "bmp", new File(fileName));
+                ImageIO.write(outputImage, "bmp", new File(fileName));
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            LOG.info(String.format("Cluster number %d was saved into file %s", counter, fileName));
+        }
+        return null;
+    }
 
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    public void saveImage(String fileName) {
+        BufferedImage image = screenInput.getImage();
+        try {
+            ImageIO.write(image, "bmp", new File(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

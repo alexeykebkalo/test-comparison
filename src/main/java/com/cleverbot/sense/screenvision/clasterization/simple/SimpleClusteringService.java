@@ -2,7 +2,6 @@ package com.cleverbot.sense.screenvision.clasterization.simple;
 
 import com.cleverbot.sense.screenvision.clasterization.ClusteringService;
 import com.cleverbot.sense.screenvision.model.Image;
-import com.cleverbot.sense.screenvision.model.Pixel;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,21 +18,28 @@ public class SimpleClusteringService implements ClusteringService {
         List<Cluster> clusters = new ArrayList<Cluster>();
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
-                Cluster cluster;
-                ClusteredPixel clusteredPixel = new ClusteredPixel();
-                Pixel pixel = image.getPixel(x, y);
-                clusteredPixel.setPixel(pixel);
+                Cluster cluster = null;
+                ClusteredPixel clusteredPixel = new ClusteredPixel(image.getPixel(x, y));
                 clusteredPixels[x][y] = clusteredPixel;
-                if (x > 0 && PixelsComparator.areSimilar(pixel, image.getPixel(x - 1, y))) {
+                if (x > 0 && PixelsComparator.areSimilar(clusteredPixel, image.getPixel(x - 1, y))) {
                     cluster = clusteredPixels[x-1][y].getCluster();
-                } else if (y > 0 && PixelsComparator.areSimilar(pixel, image.getPixel(x, y - 1))) {
-                    cluster = clusteredPixels[x][y - 1].getCluster();
-                } else {
+                }
+                if (y > 0 && PixelsComparator.areSimilar(clusteredPixel, image.getPixel(x, y - 1))) {
+                    Cluster yCluster = clusteredPixels[x][y - 1].getCluster();
+                    if (cluster == null) {
+                        cluster = yCluster;
+                    } else if (cluster != yCluster) {
+                        cluster.merge(yCluster);
+                        clusters.remove(yCluster);
+                    }
+
+                }
+                if (cluster == null) {
                     cluster = new Cluster();
                     clusters.add(cluster);
                 }
                 clusteredPixel.setCluster(cluster);
-                cluster.addPixel(pixel);
+                cluster.addPixel(clusteredPixel);
             }
         }
         List<Image> images = new ArrayList<Image>();

@@ -15,10 +15,10 @@ public class Cluster {
     private int miny;
     private int maxx;
     private int maxy;
-    private List<Pixel> pixels = new ArrayList<Pixel>();
+    private List<ClusteredPixel> clusteredPixels = new ArrayList<>();
 
-    public void addPixel(Pixel pixel) {
-        if (pixels.isEmpty()) {
+    public void addPixel(ClusteredPixel pixel) {
+        if (clusteredPixels.isEmpty()) {
             minx = pixel.getX();
             miny = pixel.getY();
             maxx = pixel.getX();
@@ -35,12 +35,19 @@ public class Cluster {
                 maxy = pixel.getY();
             }
         }
-        pixels.add(pixel);
+        clusteredPixels.add(pixel);
+    }
+
+    public void merge(Cluster cluster) {
+        for (ClusteredPixel clusteredPixel : cluster.clusteredPixels) {
+            clusteredPixel.setCluster(this);
+            addPixel(clusteredPixel);
+        }
     }
 
     public Image generateImage() {
         Image image = new Image(minx, miny, maxx - minx + 1, maxy - miny + 1);
-        for (Pixel pixel : pixels) {
+        for (ClusteredPixel pixel : clusteredPixels) {
             pixel.setX(pixel.getX() - minx);
             pixel.setY(pixel.getY() - miny);
             image.setPixel(pixel);
