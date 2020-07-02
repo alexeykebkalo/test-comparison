@@ -34,10 +34,14 @@ public class DelayedScreenCaptureRunner {
 		delayBeforeStart();
 
 		for (int captureNumber = 0; captureNumber < MAX_SCREENSHOTS; captureNumber++) {
-			BufferedImage image = screenInput.capture();
-			ImageUtil.saveImage(image, String.format(OUTPUT_FILE_FORMAT, captureNumber));
-			LOGGER.info(String.format("Captured screen #%d", captureNumber));
-			SoundUtil.playSound(captureSound);
+			try {
+				BufferedImage image = screenInput.capture();
+				ImageUtil.saveImage(image, String.format(OUTPUT_FILE_FORMAT, captureNumber));
+				LOGGER.info(String.format("Captured screen #%d", captureNumber));
+				SoundUtil.playSound(captureSound);
+			} catch (Exception e) {
+				LOGGER.info("Error when capturing screen " + captureNumber, e);
+			}
 			Thread.sleep(CAPTURE_DELAY);
 		}
 	}
