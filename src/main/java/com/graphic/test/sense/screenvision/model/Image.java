@@ -1,4 +1,4 @@
-package com.cleverbot.sense.screenvision.model;
+package com.graphic.test.sense.screenvision.model;
 
 /**
  * Created by Alexey Kebkalo akebkalo@gmail.com on 07.05.2016.

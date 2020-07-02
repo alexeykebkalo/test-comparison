@@ -1,8 +1,6 @@
-package com.cleverbot.sense.screenvision.clasterization.simple;
+package com.graphic.test.sense.screenvision.clustering.simple;
 
-import com.cleverbot.sense.screenvision.model.Pixel;
-
-import java.awt.*;
+import com.graphic.test.sense.screenvision.model.Pixel;
 
 /**
  * Created by Alexey Kebkalo akebkalo@gmail.com on 07.05.2016.

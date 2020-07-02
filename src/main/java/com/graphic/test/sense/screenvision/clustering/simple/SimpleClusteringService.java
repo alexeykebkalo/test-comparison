@@ -1,11 +1,12 @@
-package com.cleverbot.sense.screenvision.clasterization.simple;
+package com.graphic.test.sense.screenvision.clustering.simple;
 
-import com.cleverbot.sense.screenvision.clasterization.ClusteringService;
-import com.cleverbot.sense.screenvision.model.Image;
+import com.graphic.test.sense.screenvision.clustering.ClusteringService;
+import com.graphic.test.sense.screenvision.model.Image;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Alexey Kebkalo akebkalo@gmail.com on 07.05.2016.
@@ -13,9 +14,9 @@ import java.util.List;
 @Component
 public class SimpleClusteringService implements ClusteringService {
 
-    public List<Image> cluster(Image image) {
+    public List<Image> clasterize(Image image) {
         ClusteredPixel[][] clusteredPixels = new ClusteredPixel[image.getWidth()][image.getHeight()];
-        List<Cluster> clusters = new ArrayList<Cluster>();
+        List<Cluster> clusters = new LinkedList<>();
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 Cluster cluster = null;
@@ -42,10 +43,6 @@ public class SimpleClusteringService implements ClusteringService {
                 cluster.addPixel(clusteredPixel);
             }
         }
-        List<Image> images = new ArrayList<Image>();
-        for (Cluster cluster : clusters) {
-            images.add(cluster.generateImage());
-        }
-        return images;
+        return clusters.stream().map(Cluster::generateImage).collect(Collectors.toList());
     }
 }

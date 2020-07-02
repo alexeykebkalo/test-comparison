@@ -1,4 +1,4 @@
-package com.cleverbot.sense.screenvision.model;
+package com.graphic.test.sense.screenvision.model;
 
 import java.awt.*;
 

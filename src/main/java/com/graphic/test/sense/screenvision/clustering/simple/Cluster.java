@@ -1,9 +1,8 @@
-package com.cleverbot.sense.screenvision.clasterization.simple;
+package com.graphic.test.sense.screenvision.clustering.simple;
 
-import com.cleverbot.sense.screenvision.model.Image;
-import com.cleverbot.sense.screenvision.model.Pixel;
+import com.graphic.test.sense.screenvision.model.Image;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public class Cluster {
     private int miny;
     private int maxx;
     private int maxy;
-    private List<ClusteredPixel> clusteredPixels = new ArrayList<>();
+    private List<ClusteredPixel> clusteredPixels = new LinkedList<>();
 
     public void addPixel(ClusteredPixel pixel) {
         if (clusteredPixels.isEmpty()) {

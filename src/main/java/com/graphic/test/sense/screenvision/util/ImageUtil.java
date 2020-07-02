@@ -1,18 +1,25 @@
-package com.cleverbot.sense.screenvision.util;
+package com.graphic.test.sense.screenvision.util;
 
-import com.cleverbot.sense.screenvision.model.Image;
-import com.cleverbot.sense.screenvision.model.Pixel;
+import com.graphic.test.sense.screenvision.model.Image;
+import com.graphic.test.sense.screenvision.model.Pixel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.io.File;
+import java.io.IOException;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 /**
  * Created by Alexey Kebkalo akebkalo@gmail.com on 07.05.2016.
  */
-public class ImageConverter {
+public class ImageUtil {
+
+    private static final String OUTPUT_FILE_FORMAT = "bmp";
 
     public static Image convertFromBufferedImage(BufferedImage bufferedImage) {
         Image image = new Image(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
@@ -51,5 +58,17 @@ public class ImageConverter {
             }
         }
         return bufferedImage;
+    }
+
+    public static void saveImage(BufferedImage image, String fileName) throws IOException {
+        ImageIO.write(image, OUTPUT_FILE_FORMAT, new File(fileName));
+    }
+
+    public static void saveImage(Image image, String fileName) throws IOException {
+        saveImage(convertToBufferedImage(image), fileName);
+    }
+
+    public static BufferedImage readImage(String fileName) throws IOException {
+        return ImageIO.read(new File(fileName));
     }
 }
