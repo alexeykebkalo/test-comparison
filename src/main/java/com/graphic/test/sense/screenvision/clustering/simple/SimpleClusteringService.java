@@ -14,7 +14,16 @@ import java.util.stream.Collectors;
 @Component
 public class SimpleClusteringService implements ClusteringService {
 
-    public List<Image> clasterize(Image image) {
+    /**
+     * Method breaks down images into list of objects present on the image
+     *
+     * This implementation tests simple agglomerative approach, which initially considers each pixel
+     * as a separate cluster and unites neighbor clusters if their borders are similar
+     *
+     * @param image Image for clusterization
+     * @return List of clusters
+     */
+    public List<Image> clusterize(Image image) {
         ClusteredPixel[][] clusteredPixels = new ClusteredPixel[image.getWidth()][image.getHeight()];
         List<Cluster> clusters = new LinkedList<>();
         for (int y = 0; y < image.getHeight(); y++) {

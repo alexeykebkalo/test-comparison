@@ -11,9 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
-
 /**
- * Created by Alexey Kebkalo akebkalo@gmail.com on 03.05.2016.
+ * This runner clusterize input image and saves each cluster as a separate image to disk
  */
 public class ImageClusteringTestRunner {
 
@@ -34,7 +33,7 @@ public class ImageClusteringTestRunner {
         ClusteringService clusteringService = context.getBean(ClusteringService.class);
 
         BufferedImage inputImage = ImageUtil.readImage(inputFile);
-        List<Image> clusteredImages = clusteringService.clasterize(ImageUtil.convertFromBufferedImage(inputImage));
+        List<Image> clusteredImages = clusteringService.clusterize(ImageUtil.convertFromBufferedImage(inputImage));
 
         int counter = 0;
         for (Image image :clusteredImages) {

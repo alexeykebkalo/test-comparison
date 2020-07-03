@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface ClusteringService {
 
-    List<Image> clasterize(Image image);
+    List<Image> clusterize(Image image);
 }

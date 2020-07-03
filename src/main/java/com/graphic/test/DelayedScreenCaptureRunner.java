@@ -9,6 +9,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.awt.image.BufferedImage;
 
+/**
+ * This runner waits for some time and then captures screens and saves them as separate images to disk
+ *
+ */
 public class DelayedScreenCaptureRunner {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DelayedScreenCaptureRunner.class);
@@ -26,6 +30,8 @@ public class DelayedScreenCaptureRunner {
 	private static final String OUTPUT_FILE_FORMAT = "%5d.bmp";
 
 	public static void main(String [] args) throws Exception {
+
+		LOGGER.info("Initializing screen capture runner");
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
 		ScreenInput screenInput = context.getBean(ScreenInput.class);
 
