@@ -1,1 +1,1 @@
-Testing of a simple clasterization algorythm (without ML)
+Testing of a simple clustering algorithm (without ML)
