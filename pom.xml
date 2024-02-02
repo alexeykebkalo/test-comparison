@@ -9,7 +9,7 @@
     <version>0.1-SNAPSHOT</version>
 
     <properties>
-        <springVersion>5.2.7.RELEASE</springVersion>
+        <springVersion>5.2.22.RELEASE</springVersion>
         <slf4jVersion>1.7.30</slf4jVersion>
     </properties>
 
